@@ -32,11 +32,15 @@ include ('../app/controllers/almacen/listado_de_productos.php');
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Productos registrados</h3>
-                            <div class="card-tools">
-                                <a href="create.php" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear nuevo producto</a>
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                                </button>
+                            <div class="row">
+                                <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                    <h3 class="card-title m-0">Productos registrados</h3>
+                                    <div class="card-tools">
+                                        <a href="create.php" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear nuevo producto</a>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -75,7 +79,23 @@ include ('../app/controllers/almacen/listado_de_productos.php');
                                                 </center>
                                             </td>
                                             <td><?=$productos_dato['nombre'];?></td>
-                                            <td style="text-align: right"><?=$productos_dato['stock'];?></td>
+                                            <?php
+                                                $stock_actual = $productos_dato['stock'];
+                                                $stock_maximo = $productos_dato['stock_maximo'];
+                                                $stock_minimo = $productos_dato['stock_minimo'];
+                                                if($stock_actual < $stock_minimo) { ?>
+                                                    <td style="text-align: right; background-color: #ff7373; color: white; font-weight: bold"><?=$productos_dato['stock'];?></td>
+                                                <?php
+                                                }
+                                                else if($stock_actual > $stock_maximo) { ?>
+                                                    <td style="text-align: right; background-color: #00d285; color: white; font-weight: bold"><?=$productos_dato['stock'];?></td>
+                                                <?php
+                                                } else { ?>
+                                                    <td style="text-align: right"><?=$productos_dato['stock'];?></td>
+                                                <?php
+                                                }
+                                            ?>
+
                                             <td style="text-align: right"><?='$' . number_format($productos_dato['precio_compra'], 2, '.', ',');?></td>
                                             <td style="text-align: right"><?='$' . number_format($productos_dato['precio_venta'], 2, '.', ',');?></td>
                                             <td><center><?=$productos_dato['fecha_ingreso'];?></center></td>
