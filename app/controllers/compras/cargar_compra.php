@@ -48,31 +48,34 @@ $query_compras->execute();
 $compras_datos = $query_compras->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($compras_datos as $compras_dato) {
-    $codigo = $compras_dato['codigo'];
-    $categoria = $compras_dato['categoria'];
-    $nombre_producto = $compras_dato['nombre_producto'];
-    $descripcion = $compras_dato['descripcion'];
-    $fyh_creacion_p = $compras_dato['fyh_creacion_p'];
-    $stock = $compras_dato['stock'];
-    $stock_minimo = $compras_dato['stock_minimo'];
-    $stock_maximo = $compras_dato['stock_maximo'];
-    $precio_compra = $compras_dato['precio_compra'];
-    $precio_venta = $compras_dato['precio_venta'];
-    $fecha_ingreso = $compras_dato['fecha_ingreso'];
-    $imagen = $compras_dato['imagen'];
+    $id_producto            = $compras_dato['id_producto'];
+    $codigo                 = $compras_dato['codigo'];
+    $categoria              = $compras_dato['categoria'];
+    $nombre_producto        = $compras_dato['nombre_producto'];
+    $descripcion            = $compras_dato['descripcion'];
+    $fyh_creacion_p         = $compras_dato['fyh_creacion_p'];
+    $stock                  = $compras_dato['stock'];
+    $stock_minimo           = $compras_dato['stock_minimo'];
+    $stock_maximo           = $compras_dato['stock_maximo'];
+    $precio_compra          = $compras_dato['precio_compra'];
+    $precio_venta           = $compras_dato['precio_venta'];
+    $fecha_ingreso          = $compras_dato['fecha_ingreso'];
+    $imagen                 = $compras_dato['imagen'];
 
-    $nombre_proveedor = $compras_dato['nombre_proveedor'];
-    $celular = $compras_dato['celular'];
-    $telefono = $compras_dato['telefono'];
-    $empresa = $compras_dato['empresa'];
-    $email = $compras_dato['email'];
-    $direccion = $compras_dato['direccion'];
+    $id_proveedor_tabla     = $compras_dato['id_proveedor'];
+    $nombre_proveedor_tabla = $compras_dato['nombre_proveedor'];
+    $celular_tabla          = $compras_dato['celular'];
+    $telefono_tabla         = $compras_dato['telefono'];
+    $empresa_tabla          = $compras_dato['empresa'];
+    $email_tabla            = $compras_dato['email'];
+    $direccion_tabla        = $compras_dato['direccion'];
 
-    $nro_compra = $compras_dato['nro_compra'];
-    $fecha_compra = $compras_dato['fecha_compra'];
-    $comprobante = $compras_dato['comprobante'];
-    $precio_compra_total = $compras_dato['precio_compra_total'];
-    $cantidad_compra = $compras_dato['cantidad_compra'];
-    $nombres = $compras_dato['nombres'];
+    $id_compra              = $compras_dato['id_compra'];
+    $nro_compra             = $compras_dato['nro_compra'];
+    $fecha_compra           = $compras_dato['fecha_compra'];
+    $comprobante            = $compras_dato['comprobante'];
+    $precio_compra_total    = $compras_dato['precio_compra_total'];
+    $cantidad_compra        = $compras_dato['cantidad_compra'];
+    $nombres                = $compras_dato['nombres'];
 }
 

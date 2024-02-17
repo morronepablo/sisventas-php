@@ -1,6 +1,6 @@
 <?php
 
-global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos, $codigo, $categoria, $nombre_producto, $descripcion, $fyh_creacion_p, $stock, $stock_minimo, $stock_maximo, $precio_compra, $precio_venta, $fecha_ingreso, $imagen, $nombre_proveedor, $celular, $telefono, $empresa, $email, $direccion, $nro_compra, $fecha_compra, $comprobante, $cantidad_compra, $nombres, $precio_compra_total, $nombre_proveedor_tabla, $celular_tabla, $telefono_tabla, $empresa_tabla, $email_tabla, $direccion_tabla;
+global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos, $codigo, $categoria, $nombre_producto, $descripcion, $fyh_creacion_p, $stock, $stock_minimo, $stock_maximo, $precio_compra, $precio_venta, $fecha_ingreso, $imagen, $nombre_proveedor, $celular, $telefono, $empresa, $email, $direccion, $nro_compra, $fecha_compra, $comprobante, $cantidad_compra, $nombres, $precio_compra_total, $nombre_proveedor_tabla, $celular_tabla, $telefono_tabla, $empresa_tabla, $email_tabla, $direccion_tabla, $id_compra, $id_producto;
 include ('../app/config.php');
 include ('../layout/sesion.php');
 
@@ -37,9 +37,9 @@ include ('../app/controllers/compras/cargar_compra.php');
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="card card-info">
+                            <div class="card card-danger">
                                 <div class="card-header">
-                                    <h3 class="card-title">Datos compra</h3>
+                                    <h3 class="card-title">¿Está seguro de eliminar la compra?</h3>
                                 </div>
 
                                 <div class="row">
@@ -54,7 +54,7 @@ include ('../app/controllers/compras/cargar_compra.php');
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <input type="text" id="id_producto" hidden>
+                                                                <input type="text" value="<?=$id_producto?>" id="id_producto" hidden>
                                                                 <label for="">Codigo:</label>
                                                                 <h5 class="text-success" id="codigo"><?=$codigo;?></h5>
                                                             </div>
@@ -145,7 +145,7 @@ include ('../app/controllers/compras/cargar_compra.php');
                                                         <label for="">Imagen del producto</label>
                                                         <br>
                                                         <center>
-                                                            <img src="<?=$URL.'/almacen/img_productos/'.$imagen;?>" class="img-fluid"  class="img-fluid" style="height: 170px" >
+                                                            <img src="<?=$URL.'/almacen/img_productos/'.$imagen;?>" class="img-fluid" style="height: 170px">
                                                         </center>
                                                     </div>
                                                 </div>
@@ -210,7 +210,7 @@ include ('../app/controllers/compras/cargar_compra.php');
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card card-outline card-primary" style="font-size: 15px">
+                                    <div class="card card-outline card-danger" style="font-size: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">Detalle de la compra</h3>
                                             <div class="card-tools">
@@ -275,19 +275,56 @@ include ('../app/controllers/compras/cargar_compra.php');
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <a href="index.php" id="btn_guardar_compra" class="btn btn-secondary btn-block"><i class="bi bi-reply-fill"></i> Volver</a>
+                                                    <button id="btn_eliminar" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar compra</button>
+                                                    <a href="index.php"  class="btn btn-secondary float-right"><i class="bi bi-reply-fill"></i> Volver</a>
                                                 </div>
                                             </div>
+                                            <script>
+                                                $('#btn_eliminar').click(function () {
+                                                    var id_compra = '<?=$id_compra?>';
+                                                    var id_producto = $('#id_producto').val();
+                                                    var cantidad_compra = '<?=$cantidad_compra;?>';
+                                                    var stock_actual = '<?=$stock;?>';
+
+                                                    Swal.fire({
+                                                        title: '¿Está seguro de eliminar la compra?',
+                                                        icon: 'question',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Si, deseo eliminar !'
+                                                    }).then((result) => {
+                                                        if(result.isConfirmed) {
+                                                            Swal.fire(
+                                                                eliminar(),
+                                                                'Compra eliminada !',
+                                                                'success'
+                                                            );
+                                                        }
+                                                    });
+                                                    function eliminar() {
+                                                        var url = "../app/controllers/compras/delete.php";
+
+                                                        $.get(url,{
+                                                            id_compra:id_compra,
+                                                            id_producto:id_producto,
+                                                            cantidad_compra:cantidad_compra,
+                                                            stock_actual:stock_actual
+                                                        },function (datos) {
+                                                            $('#respuesta_delete').html(datos);
+                                                        });
+                                                    }
+                                                });
+                                            </script>
                                         </div>
 
                                     </div>
 
                                 </div>
 
-                                <div id="respuesta_create"></div>
+                                <div id="respuesta_delete"></div>
 
                             </div>
-
 
 
                         </div>

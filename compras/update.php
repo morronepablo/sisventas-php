@@ -1,6 +1,6 @@
 <?php
 
-global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos;
+global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos, $codigo, $categoria, $nombre_producto, $descripcion, $fyh_creacion_p, $stock, $stock_minimo, $stock_maximo, $precio_compra, $precio_venta, $fecha_ingreso, $imagen, $nro_compra, $fecha_compra, $comprobante, $precio_compra_total, $cantidad_compra, $id_compra, $id_proveedor_tabla, $nombre_proveedor_tabla, $celular_tabla, $telefono_tabla, $empresa_tabla, $email_tabla, $direccion_tabla;
 include ('../app/config.php');
 include ('../layout/sesion.php');
 
@@ -8,7 +8,7 @@ include ('../layout/parte1.php');
 
 include ('../app/controllers/almacen/listado_de_productos.php');
 include ('../app/controllers/proveedores/listado_de_proveedores.php');
-include ('../app/controllers/compras/ultimo_id.php');
+include ('../app/controllers/compras/cargar_compra.php');
 
 ?>
 
@@ -24,7 +24,7 @@ include ('../app/controllers/compras/ultimo_id.php');
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-12">
-                            <h1 class="m-0">Registro de una nueva compra</h1>
+                            <h1 class="m-0">Actualización de la compra</h1>
                         </div><!-- /.col -->
 
                     </div><!-- /.row -->
@@ -37,7 +37,7 @@ include ('../app/controllers/compras/ultimo_id.php');
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="card card-primary">
+                            <div class="card card-success">
                                 <div class="card-header">
                                     <h3 class="card-title">Llene los datos</h3>
                                 </div>
@@ -200,23 +200,23 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <input type="text" id="id_producto" hidden>
+                                                                <input type="text" id="id_producto" value="<?=$id_producto;?>" hidden>
                                                                 <label for="">Codigo:</label>
-                                                                <h5 class="text-success" id="codigo"></h5>
+                                                                <h5 class="text-success" id="codigo"><?=$codigo;?></h5>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label for="">Categoría:</label>
                                                                 <div style="display: flex">
-                                                                    <p id="categoria"></p>
+                                                                    <p id="categoria"><?=$categoria;?></p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="">Nombre de producto:</label>
                                                             <div class="form-group">
-                                                                <p id="nombre_producto"></p>
+                                                                <p id="nombre_producto">><?=$nombre_producto;?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -225,13 +225,18 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                         <div class="col-md-8">
                                                             <div class="form-group">
                                                                 <label for="">Descripción:</label>
-                                                                <p id="descripcion_producto"></p>
+                                                                <p id="descripcion_producto"><?=$descripcion;?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label for="">Fecha y Hora creación</label>
-                                                                <p id="fyh_creacion"></p>
+                                                                <p id="fyh_creacion">
+                                                                    <?php
+                                                                    $date = date_create($fyh_creacion_p);
+                                                                    echo date_format($date, 'd/m/Y H:i:s');
+                                                                    ?>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -240,37 +245,42 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Stock:</label>
-                                                                <p id="stock" style="background-color: #fff819; text-align: right; padding-right: 10px; border-radius: 5px;"></p>
+                                                                <p id="stock" style="background-color: #fff819; text-align: right; padding-right: 10px; border-radius: 5px;"><?=$stock;?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Stock mínimo:</label>
-                                                                <p id="stock_minimo" style="text-align: right; padding-right: 10px;"></p>
+                                                                <p id="stock_minimo" style="text-align: right; padding-right: 10px;"><?=$stock_minimo;?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Stock máximo:</label>
-                                                                <p id="stock_maximo" style="text-align: right; padding-right: 10px;"></p>
+                                                                <p id="stock_maximo" style="text-align: right; padding-right: 10px;"><?=$stock_maximo;?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Precio compra:</label>
-                                                                <p id="precio_compra" style="text-align: right; padding-right: 10px;"></p>
+                                                                <p id="precio_compra" style="text-align: right; padding-right: 10px;"><?='$' . number_format($precio_compra, 2, '.', ',');?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Precio venta:</label>
-                                                                <p id="precio_venta" style="text-align: right; padding-right: 10px;"></p>
+                                                                <p id="precio_venta" style="text-align: right; padding-right: 10px;"><?='$' . number_format($precio_venta, 2, '.', ',');?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="">Fecha ingreso:</label>
-                                                                <p id="fecha_ingreso"></p>
+                                                                <p id="fecha_ingreso">
+                                                                    <?php
+                                                                    $date = date_create($fecha_ingreso);
+                                                                    echo date_format($date, 'd/m/Y');
+                                                                    ?>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -281,7 +291,7 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                         <label for="">Imagen del producto</label>
                                                         <br>
                                                         <center>
-                                                            <img  id="img_producto" style="width: 160px; height: 160px; object-fit: contain; display: none;" >
+                                                            <img  id="img_producto" src="<?=$URL.'/almacen/img_productos/'.$imagen;?>" class="img-fluid"  class="img-fluid" style="height: 170px" >
                                                         </center>
                                                     </div>
                                                 </div>
@@ -415,21 +425,21 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <input type="text" id="id_proveedor" hidden>
+                                                            <input type="text" id="id_proveedor" value="<?=$id_proveedor_tabla;?>" hidden>
                                                             <label for="">Nombre del proveedor</label>
-                                                            <input type="text" id="nombre_proveedor" class="form-control" disabled>
+                                                            <input type="text" id="nombre_proveedor" value="<?=$nombre_proveedor_tabla;?>" class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Celular</label>
-                                                            <input type="number" id="celular" class="form-control" disabled>
+                                                            <input type="number" id="celular" value="<?=$celular_tabla;?>" class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Teléfono</label>
-                                                            <input type="number" id="telefono" class="form-control" disabled>
+                                                            <input type="number" id="telefono" value="<?=$telefono_tabla;?>" class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -438,19 +448,19 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Empresa</label>
-                                                            <input type="text" id="empresa" class="form-control" disabled>
+                                                            <input type="text" id="empresa" value="<?=$empresa_tabla;?>" class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Email</label>
-                                                            <input type="email" id="email" class="form-control" disabled>
+                                                            <input type="email" id="email" value="<?=$email_tabla;?>" class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Dirección</label>
-                                                            <textarea id="direccion" cols="30" rows="1" class="form-control" disabled></textarea>
+                                                            <textarea id="direccion" cols="30" rows="1" class="form-control" disabled><?=$direccion_tabla;?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -482,61 +492,68 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Nro. compra</label>
-                                                        <input type="text" value="<?=$ultimo_id_dato + 1;?>" class="form-control text-right" disabled>
-                                                        <input type="text" value="<?=$ultimo_id_dato + 1;?>" id="nro_compra" hidden>
+                                                        <input type="text" value="<?=$nro_compra;?>" id="nro_compra" class="form-control text-right" disabled>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Fecha compra</label>
-                                                        <input type="date" id="fecha_compra" class="form-control">
+                                                        <input type="date" id="fecha_compra" value="<?=$fecha_compra;?>" class="form-control">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Comprobante</label>
-                                                        <input type="text" id="comprobante" class="form-control">
+                                                        <input type="text" id="comprobante" value="<?=$comprobante;?>" class="form-control">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Precio compra</label>
-                                                        <input type="number" step="0.01" id="compra_precio" class="form-control text-right">
+                                                        <input type="number" step="0.01" id="compra_precio" value="<?=$precio_compra_total;?>" class="form-control text-right">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="">Stock actual</label>
-                                                        <input type="number" id="stock_actual" class="form-control text-right" style="background-color: #fff819" disabled>
+                                                        <input type="number" id="stock_actual" value="<?=$stock=$stock-$cantidad_compra;?>" class="form-control text-right" style="background-color: #fff819" disabled>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="">Stock total</label>
-                                                        <input type="number" id="stock_total" class="form-control text-right" disabled>
+                                                        <input type="number" id="stock_total" value="<?=$stock;?>" class="form-control text-right" disabled>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Cantidad compra</label>
-                                                        <input type="number" id="cantidad_compra" class="form-control text-right">
+                                                        <div class="row">
+                                                            <input type="number" id="cantidad_compra" value="<?=$cantidad_compra;?>" class="form-control text-right" style="width: 85%">
+                                                            <button onclick="window.location.reload();" style="margin-left: 1px" class="btn btn-success"><i class="bi bi-arrow-clockwise"></i></button>
+                                                        </div>
                                                     </div>
                                                     <script>
                                                         $('#cantidad_compra').keyup(function () {
                                                             //alert('estamos presionando el input');
+                                                            sumacantidades();
+                                                        });
+                                                        sumacantidades();
+                                                        //sumacantidades();
+                                                        function sumacantidades() {
                                                             var stock_actual = $('#stock_actual').val();
                                                             var stock_compra = $('#cantidad_compra').val();
 
                                                             var total = parseInt(stock_actual)  + parseInt(stock_compra) ;
 
                                                             $('#stock_total').val(total);
-                                                        });
+                                                        }
                                                     </script>
                                                 </div>
 
@@ -551,13 +568,14 @@ include ('../app/controllers/compras/ultimo_id.php');
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <button id="btn_guardar_compra" class="btn btn-primary"><i class="bi bi-save"></i> Guardar compra</button>
+                                                    <button id="btn_actualizar_compra" class="btn btn-success"><i class="bi bi-lightning-fill"></i> Actualizar compra</button>
                                                     <a href="index.php"  class="btn btn-secondary float-right"><i class="bi bi-reply-fill"></i> Volver</a>
                                                 </div>
                                             </div>
                                             <script>
-                                                $('#btn_guardar_compra').click(function () {
+                                                $('#btn_actualizar_compra').click(function () {
 
+                                                    var id_compra       = '<?=$id_compra;?>';
                                                     var id_producto     = $('#id_producto').val();
                                                     var nro_compra      = $('#nro_compra').val();
                                                     var fecha_compra    = $('#fecha_compra').val();
@@ -585,9 +603,10 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                         alert('debe ingresar la cantidad de la compra !!!!');
                                                     } else {
 
-                                                        var url = "../app/controllers/compras/create.php";
+                                                        var url = "../app/controllers/compras/update.php";
 
                                                         $.get(url,{
+                                                            id_compra:id_compra,
                                                             id_producto:id_producto,
                                                             nro_compra:nro_compra,
                                                             fecha_compra:fecha_compra,
@@ -598,7 +617,7 @@ include ('../app/controllers/compras/ultimo_id.php');
                                                             cantidad_compra:cantidad_compra,
                                                             stock_total:stock_total
                                                         },function (datos) {
-                                                            $('#respuesta_create').html(datos);
+                                                            $('#respuesta_update').html(datos);
                                                         });
 
                                                     }
@@ -611,7 +630,7 @@ include ('../app/controllers/compras/ultimo_id.php');
 
                                 </div>
 
-                                <div id="respuesta_create"></div>
+                                <div id="respuesta_update"></div>
 
                             </div>
 
