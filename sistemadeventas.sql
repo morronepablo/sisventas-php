@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2024 a las 20:02:37
+-- Tiempo de generación: 17-02-2024 a las 04:21:36
 -- Versión del servidor: 10.1.26-MariaDB
 -- Versión de PHP: 7.1.9
 
@@ -51,9 +51,9 @@ CREATE TABLE `tb_almacen` (
 --
 
 INSERT INTO `tb_almacen` (`id_producto`, `codigo`, `nombre`, `descripcion`, `stock`, `stock_minimo`, `stock_maximo`, `precio_compra`, `precio_venta`, `fecha_ingreso`, `imagen`, `usuario_id`, `categoria_id`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 'P-00001', 'Coca Cola', '2 litros retornable', 50, 10, 200, '800.00', '1200.00', '2024-02-14', '2024-02-14-07-11-41_Coca Cola Clasica Retornable 2 lts pet__1.jpg', 1, 7, '2024-02-14 19:11:41', '0000-00-00 00:00:00'),
+(1, 'P-00001', 'Coca Cola', '2 litros retornable', 10, 20, 200, '800.00', '1200.00', '2024-02-14', '2024-02-14-07-11-41_Coca Cola Clasica Retornable 2 lts pet__1.jpg', 1, 7, '2024-02-14 19:11:41', '0000-00-00 00:00:00'),
 (2, 'P-00002', 'Auriculares', 'con cargador incorporado', 100, 10, 200, '5000.00', '7600.00', '2024-02-15', '2024-02-15-02-52-03_auriculares.jpg', 1, 11, '2024-02-15 14:52:03', '0000-00-00 00:00:00'),
-(3, 'P-00003', 'Vino Tinto', 'Vino tinto de 300ml', 60, 10, 200, '500.00', '900.00', '2024-02-15', '2024-02-15-02-55-40_vino_tinto.jpg', 1, 1, '2024-02-15 14:55:40', '0000-00-00 00:00:00');
+(3, 'P-00003', 'Vino Tinto', 'Vino tinto de 300ml', 60, 10, 50, '500.00', '900.00', '2024-02-15', '2024-02-15-02-55-40_vino_tinto.jpg', 1, 1, '2024-02-15 14:55:40', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,7 @@ CREATE TABLE `tb_compras` (
   `id_compra` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
   `nro_compra` int(11) NOT NULL,
-  `fecha_compra` datetime NOT NULL,
+  `fecha_compra` date NOT NULL,
   `proveedor_id` int(11) NOT NULL,
   `comprobante` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `usuario_id` int(11) NOT NULL,
@@ -110,12 +110,12 @@ CREATE TABLE `tb_compras` (
 --
 
 INSERT INTO `tb_compras` (`id_compra`, `producto_id`, `nro_compra`, `fecha_compra`, `proveedor_id`, `comprobante`, `usuario_id`, `precio_compra`, `cantidad`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 1, 1, '2024-02-14 00:00:00', 1, 'FACTURA', 1, '800.00', 50, '2024-02-14 00:00:00', '2024-02-14 00:00:00'),
-(2, 3, 2, '2024-02-16 00:00:00', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
-(3, 3, 2, '2024-02-16 00:00:00', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
-(4, 1, 4, '2024-02-16 00:00:00', 3, 'FACTURA NRO 10000-00002', 1, '8000.00', 10, '2024-02-16 15:26:41', '0000-00-00 00:00:00'),
-(5, 3, 5, '2024-02-16 00:00:00', 2, 'FACTURA NRO 10000-00003', 1, '8000.00', 10, '2024-02-16 15:49:27', '0000-00-00 00:00:00'),
-(6, 3, 6, '2024-02-16 00:00:00', 2, 'FACTURA NRO 10000-00005', 1, '8000.00', 10, '2024-02-16 15:54:27', '0000-00-00 00:00:00');
+(1, 1, 1, '2024-02-14', 1, 'FACTURA', 1, '800.00', 50, '2024-02-14 00:00:00', '2024-02-14 00:00:00'),
+(2, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
+(3, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
+(4, 1, 4, '2024-02-16', 3, 'FACTURA NRO 10000-00002', 1, '8000.00', 10, '2024-02-16 15:26:41', '0000-00-00 00:00:00'),
+(5, 3, 5, '2024-02-16', 2, 'FACTURA NRO 10000-00003', 1, '8000.00', 10, '2024-02-16 15:49:27', '0000-00-00 00:00:00'),
+(6, 3, 6, '2024-02-16', 2, 'FACTURA NRO 10000-00005', 1, '8000.00', 10, '2024-02-16 15:54:27', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
