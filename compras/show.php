@@ -1,6 +1,6 @@
 <?php
 
-global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos;
+global $productos_datos, $categorias_datos, $email_sesion, $id_usuario_sesion, $URL, $ultimo_id_dato, $proveedores_datos, $codigo, $categoria, $nombre_producto, $descripcion, $fyh_creacion_p, $stock, $stock_minimo, $stock_maximo, $precio_compra, $precio_venta, $fecha_ingreso, $imagen, $nombre_proveedor, $celular, $telefono, $empresa, $email, $direccion, $nro_compra, $fecha_compra, $comprobante, $cantidad_compra, $nombres, $precio_compra_total;
 include ('../app/config.php');
 include ('../layout/sesion.php');
 
