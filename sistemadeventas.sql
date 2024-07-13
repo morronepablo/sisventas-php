@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-02-2024 a las 18:00:05
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Tiempo de generación: 13-07-2024 a las 06:18:31
+-- Versión del servidor: 10.1.26-MariaDB
+-- Versión de PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,16 +30,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_almacen` (
   `id_producto` int(11) NOT NULL,
-  `codigo` varchar(255) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `descripcion` text DEFAULT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_spanish_ci,
   `stock` int(11) NOT NULL,
   `stock_minimo` int(11) DEFAULT NULL,
   `stock_maximo` int(11) DEFAULT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
   `precio_venta` decimal(10,2) NOT NULL,
   `fecha_ingreso` date NOT NULL,
-  `imagen` text DEFAULT NULL,
+  `imagen` text COLLATE utf8mb4_spanish_ci,
   `usuario_id` int(11) NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `fyh_creacion` datetime NOT NULL,
@@ -50,9 +51,9 @@ CREATE TABLE `tb_almacen` (
 --
 
 INSERT INTO `tb_almacen` (`id_producto`, `codigo`, `nombre`, `descripcion`, `stock`, `stock_minimo`, `stock_maximo`, `precio_compra`, `precio_venta`, `fecha_ingreso`, `imagen`, `usuario_id`, `categoria_id`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 'P-00001', 'Coca Cola', '2 litros retornable', 10, 20, 200, 800.00, 1200.00, '2024-02-14', '2024-02-14-07-11-41_Coca Cola Clasica Retornable 2 lts pet__1.jpg', 1, 7, '2024-02-14 19:11:41', '0000-00-00 00:00:00'),
-(2, 'P-00002', 'Auriculares', 'con cargador incorporado', 100, 10, 200, 5000.00, 7600.00, '2024-02-15', '2024-02-15-02-52-03_auriculares.jpg', 1, 11, '2024-02-15 14:52:03', '0000-00-00 00:00:00'),
-(3, 'P-00003', 'Vino Tinto', 'Vino tinto de 300ml', 90, 10, 100, 500.00, 900.00, '2024-02-15', '2024-02-15-02-55-40_vino_tinto.jpg', 1, 1, '2024-02-15 14:55:40', '2024-02-17 20:37:33');
+(1, 'P-00001', 'Coca Cola', '2 litros retornable', 11, 20, 200, '800.00', '1200.00', '2024-02-14', '2024-02-14-07-11-41_Coca Cola Clasica Retornable 2 lts pet__1.jpg', 1, 7, '2024-02-14 19:11:41', '0000-00-00 00:00:00'),
+(2, 'P-00002', 'Auriculares', 'con cargador incorporado', 96, 10, 200, '5000.00', '7600.00', '2024-02-15', '2024-02-15-02-52-03_auriculares.jpg', 1, 11, '2024-02-15 14:52:03', '0000-00-00 00:00:00'),
+(3, 'P-00003', 'Vino Tinto', 'Vino tinto de 300ml', 37, 10, 100, '500.00', '900.00', '2024-02-15', '2024-02-15-02-55-40_vino_tinto.jpg', 1, 1, '2024-02-15 14:55:40', '2024-02-17 20:37:33');
 
 -- --------------------------------------------------------
 
@@ -62,12 +63,24 @@ INSERT INTO `tb_almacen` (`id_producto`, `codigo`, `nombre`, `descripcion`, `sto
 
 CREATE TABLE `tb_carrito` (
   `id_carrito` int(11) NOT NULL,
-  `venta_id` int(11) NOT NULL,
+  `nro_venta` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_carrito`
+--
+
+INSERT INTO `tb_carrito` (`id_carrito`, `nro_venta`, `producto_id`, `cantidad`, `fyh_creacion`, `fyh_actualizacion`) VALUES
+(1, 1, 3, 1, '2024-02-20 13:41:29', '0000-00-00 00:00:00'),
+(2, 1, 1, 2, '2024-02-20 13:42:05', '0000-00-00 00:00:00'),
+(9, 1, 2, 1, '2024-02-20 15:22:55', '0000-00-00 00:00:00'),
+(10, 2, 2, 2, '2024-02-21 13:41:13', '0000-00-00 00:00:00'),
+(11, 2, 3, 2, '2024-02-21 13:41:40', '0000-00-00 00:00:00'),
+(12, 3, 1, 1, '2024-07-13 00:55:51', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -77,7 +90,7 @@ CREATE TABLE `tb_carrito` (
 
 CREATE TABLE `tb_categorias` (
   `id_categoria` int(11) NOT NULL,
-  `nombre_categoria` varchar(255) NOT NULL,
+  `nombre_categoria` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -113,7 +126,17 @@ CREATE TABLE `tb_clientes` (
   `email_cliente` varchar(255) NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tb_clientes`
+--
+
+INSERT INTO `tb_clientes` (`id_cliente`, `nombre_cliente`, `dni_cliente`, `celular_cliente`, `email_cliente`, `fyh_creacion`, `fyh_actualizacion`) VALUES
+(1, 'Julian Mendoza', '20658788', '1166587412', 'julian@gmail.com', '2024-02-20 00:00:00', '2024-02-20 00:00:00'),
+(2, 'Julia Mamani', '25774833', '1174896312', 'julia@gmail.com', '2024-02-20 00:00:00', '2024-02-20 00:00:00'),
+(3, 'Juan Montes', '30478996', '1138557885', 'juan@gmail.com', '2024-02-21 13:16:07', '0000-00-00 00:00:00'),
+(4, 'Pablo Morrone', '22362590', '1138669097', 'morronepablo@gmail.com', '2024-07-13 00:56:46', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -127,7 +150,7 @@ CREATE TABLE `tb_compras` (
   `nro_compra` int(11) NOT NULL,
   `fecha_compra` date NOT NULL,
   `proveedor_id` int(11) NOT NULL,
-  `comprobante` varchar(100) NOT NULL,
+  `comprobante` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
   `cantidad` int(11) NOT NULL,
@@ -140,11 +163,10 @@ CREATE TABLE `tb_compras` (
 --
 
 INSERT INTO `tb_compras` (`id_compra`, `producto_id`, `nro_compra`, `fecha_compra`, `proveedor_id`, `comprobante`, `usuario_id`, `precio_compra`, `cantidad`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 1, 1, '2024-02-14', 1, 'FACTURA', 1, 800.00, 50, '2024-02-14 00:00:00', '2024-02-14 00:00:00'),
-(2, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, 8000.00, 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
-(3, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, 8000.00, 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
-(4, 1, 4, '2024-02-16', 3, 'FACTURA NRO 10000-00002', 1, 8000.00, 10, '2024-02-16 15:26:41', '0000-00-00 00:00:00'),
-(5, 3, 5, '2024-02-16', 3, 'FACTURA NRO 10000-00003', 1, 50000.00, 50, '2024-02-16 15:49:27', '2024-02-17 17:52:40');
+(1, 1, 1, '2024-02-14', 1, 'FACTURA', 1, '800.00', 50, '2024-02-14 00:00:00', '2024-02-14 00:00:00'),
+(2, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
+(3, 3, 2, '2024-02-16', 2, 'FACTURA NRO 10000-00001', 1, '8000.00', 10, '2024-02-16 15:18:31', '0000-00-00 00:00:00'),
+(4, 1, 4, '2024-02-16', 3, 'FACTURA NRO 10000-00002', 1, '8000.00', 10, '2024-02-16 15:26:41', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -154,12 +176,12 @@ INSERT INTO `tb_compras` (`id_compra`, `producto_id`, `nro_compra`, `fecha_compr
 
 CREATE TABLE `tb_proveedores` (
   `id_proveedor` int(11) NOT NULL,
-  `nombre_proveedor` varchar(255) NOT NULL,
-  `celular` varchar(50) NOT NULL,
-  `telefono` varchar(50) DEFAULT NULL,
-  `empresa` varchar(255) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `direccion` varchar(255) NOT NULL,
+  `nombre_proveedor` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `celular` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `telefono` varchar(50) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `empresa` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -181,7 +203,7 @@ INSERT INTO `tb_proveedores` (`id_proveedor`, `nombre_proveedor`, `celular`, `te
 
 CREATE TABLE `tb_roles` (
   `id_rol` int(11) NOT NULL,
-  `rol` varchar(255) NOT NULL,
+  `rol` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -203,10 +225,10 @@ INSERT INTO `tb_roles` (`id_rol`, `rol`, `fyh_creacion`, `fyh_actualizacion`) VA
 
 CREATE TABLE `tb_usuarios` (
   `id_usuario` int(11) NOT NULL,
-  `nombres` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password_user` text NOT NULL,
-  `token` varchar(100) NOT NULL,
+  `nombres` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `password_user` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  `token` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `rol_id` int(11) NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
@@ -227,11 +249,21 @@ INSERT INTO `tb_usuarios` (`id_usuario`, `nombres`, `email`, `password_user`, `t
 
 CREATE TABLE `tb_ventas` (
   `id_venta` int(11) NOT NULL,
+  `nro_venta` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
   `total_pagado` decimal(10,2) NOT NULL,
   `fyh_creacion` datetime NOT NULL,
   `fyh_actualizacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_ventas`
+--
+
+INSERT INTO `tb_ventas` (`id_venta`, `nro_venta`, `cliente_id`, `total_pagado`, `fyh_creacion`, `fyh_actualizacion`) VALUES
+(1, 1, 3, '10900.00', '2024-02-21 13:36:10', '0000-00-00 00:00:00'),
+(2, 2, 1, '17000.00', '2024-02-21 15:31:25', '0000-00-00 00:00:00'),
+(3, 3, 4, '1200.00', '2024-07-13 00:57:27', '0000-00-00 00:00:00');
 
 --
 -- Índices para tablas volcadas
@@ -250,8 +282,8 @@ ALTER TABLE `tb_almacen`
 --
 ALTER TABLE `tb_carrito`
   ADD PRIMARY KEY (`id_carrito`),
-  ADD KEY `venta_id` (`venta_id`),
-  ADD KEY `producto_id` (`producto_id`);
+  ADD KEY `producto_id` (`producto_id`),
+  ADD KEY `nro_venta` (`nro_venta`);
 
 --
 -- Indices de la tabla `tb_categorias`
@@ -298,6 +330,7 @@ ALTER TABLE `tb_usuarios`
 --
 ALTER TABLE `tb_ventas`
   ADD PRIMARY KEY (`id_venta`),
+  ADD KEY `nro_venta` (`nro_venta`),
   ADD KEY `cliente_id` (`cliente_id`);
 
 --
@@ -314,7 +347,7 @@ ALTER TABLE `tb_almacen`
 -- AUTO_INCREMENT de la tabla `tb_carrito`
 --
 ALTER TABLE `tb_carrito`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_categorias`
@@ -326,13 +359,13 @@ ALTER TABLE `tb_categorias`
 -- AUTO_INCREMENT de la tabla `tb_clientes`
 --
 ALTER TABLE `tb_clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_compras`
 --
 ALTER TABLE `tb_compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_proveedores`
@@ -356,7 +389,7 @@ ALTER TABLE `tb_usuarios`
 -- AUTO_INCREMENT de la tabla `tb_ventas`
 --
 ALTER TABLE `tb_ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -373,8 +406,7 @@ ALTER TABLE `tb_almacen`
 -- Filtros para la tabla `tb_carrito`
 --
 ALTER TABLE `tb_carrito`
-  ADD CONSTRAINT `tb_carrito_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `tb_almacen` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `tb_carrito_ibfk_2` FOREIGN KEY (`venta_id`) REFERENCES `tb_ventas` (`id_venta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tb_carrito_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `tb_almacen` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tb_compras`
@@ -394,7 +426,8 @@ ALTER TABLE `tb_usuarios`
 -- Filtros para la tabla `tb_ventas`
 --
 ALTER TABLE `tb_ventas`
-  ADD CONSTRAINT `tb_ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `tb_clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tb_ventas_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `tb_clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `tb_ventas_ibfk_3` FOREIGN KEY (`nro_venta`) REFERENCES `tb_carrito` (`nro_venta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

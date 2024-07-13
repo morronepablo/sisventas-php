@@ -5,7 +5,7 @@ include('../app/config.php');
 include('../layout/sesion.php');
 
 include('../layout/parte1.php');
-include('../app/controllers/usuarios/listado_de_usuarios.php');
+include('../app/controllers/clientes/listado_de_clientes.php');
 
 ?>
 
@@ -16,7 +16,7 @@ include('../app/controllers/usuarios/listado_de_usuarios.php');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1 class="m-0">Listado de usuarios</h1>
+                    <h1 class="m-0">Listado de clientes</h1>
                 </div><!-- /.col -->
 
             </div><!-- /.row -->
@@ -32,9 +32,9 @@ include('../app/controllers/usuarios/listado_de_usuarios.php');
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Usuarios registrados</h3>
+                            <h3 class="card-title">Clientes registrados</h3>
                             <div class="card-tools">
-                                <a href="create.php" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear nuevo usuario</a>
+                                <a href="create.php" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear nuevo cliente</a>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
@@ -49,46 +49,34 @@ include('../app/controllers/usuarios/listado_de_usuarios.php');
                                             <center>Nro</center>
                                         </th>
                                         <th>
-                                            <center>Nombres</center>
+                                            <center>Cliente</center>
+                                        </th>
+                                        <th>
+                                            <center>DNI/CUIT</center>
+                                        </th>
+                                        <th>
+                                            <center>Celular</center>
                                         </th>
                                         <th>
                                             <center>Email</center>
-                                        </th>
-                                        <th>
-                                            <center>Rol</center>
-                                        </th>
-                                        <th>
-                                            <center>Acciones</center>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $contador_usuario = 0;
-                                    foreach ($usuarios_datos as $usuarios_dato) {
-                                        $contador_usuario = $contador_usuario + 1;
-                                        $id_usuario = $usuarios_dato['id_usuario'];
+                                    $contador_cliente = 0;
+                                    foreach ($clientes_datos as $clientes_dato) {
+                                        $contador_cliente = $contador_cliente + 1;
+                                        $id_cliente = $clientes_dato['id_cliente'];
                                     ?>
                                         <tr>
                                             <td>
-                                                <center><?= $contador_usuario; ?></center>
+                                                <center><?= $contador_cliente; ?></center>
                                             </td>
-                                            <td><?= $usuarios_dato['nombres']; ?></td>
-                                            <td><?= $usuarios_dato['email']; ?></td>
-                                            <td>
-                                                <center>
-                                                    <button class="btn btn-outline-info btn-sm" style="border-radius: 20px"><?= $usuarios_dato['rol']; ?></button>
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <center>
-                                                    <div class="btn-group">
-                                                        <a href="show.php?id=<?= $id_usuario; ?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
-                                                        <a href="update.php?id=<?= $id_usuario; ?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-                                                        <a href="delete.php?id=<?= $id_usuario; ?>" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                                                    </div>
-                                                </center>
-                                            </td>
+                                            <td><?= $clientes_dato['nombre_cliente']; ?></td>
+                                            <td><?= $clientes_dato['dni_cliente']; ?></td>
+                                            <td><?= $clientes_dato['celular_cliente']; ?></td>
+                                            <td><?= $clientes_dato['email_cliente']; ?></td>
                                         </tr>
                                     <?php
                                     }
@@ -100,16 +88,16 @@ include('../app/controllers/usuarios/listado_de_usuarios.php');
                                             <center>Nro</center>
                                         </th>
                                         <th>
-                                            <center>Nombres</center>
+                                            <center>Cliente</center>
+                                        </th>
+                                        <th>
+                                            <center>DNI/CUIT</center>
+                                        </th>
+                                        <th>
+                                            <center>Celular</center>
                                         </th>
                                         <th>
                                             <center>Email</center>
-                                        </th>
-                                        <th>
-                                            <center>Rol</center>
-                                        </th>
-                                        <th>
-                                            <center>Acciones</center>
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -157,12 +145,12 @@ include('../layout/parte2.php');
             "lengthMenu": [5, 10, 25, 50],
             "language": {
                 "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
-                "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
-                "infoFiltered": "(Filtrado de _MAX_ total Usuarios)",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Clientes",
+                "infoFiltered": "(Filtrado de _MAX_ total Clientes)",
                 "infoPostFix": "",
                 "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Usuarios",
+                "lengthMenu": "Mostrar _MENU_ Clientes",
                 "loadingRecords": "Cargando...",
                 "processing": "Procesando...",
                 "search": "Buscador:",

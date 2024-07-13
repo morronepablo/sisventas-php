@@ -2,11 +2,11 @@
 
 
 global $roles_datos, $categorias_datos;
-include ('../app/config.php');
-include ('../layout/sesion.php');
+include('../app/config.php');
+include('../layout/sesion.php');
 
-include ('../layout/parte1.php');
-include ('../app/controllers/categorias/listado_de_categorias.php');
+include('../layout/parte1.php');
+include('../app/controllers/categorias/listado_de_categorias.php');
 
 ?>
 
@@ -47,94 +47,111 @@ include ('../app/controllers/categorias/listado_de_categorias.php');
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped table-sm table-hover">
                                 <thead class="bg-warning">
-                                <tr>
-                                    <th><center>Nro</center></th>
-                                    <th><center>Nombre de la categoría</center></th>
-                                    <th><center>Acciones</center></th>
-                                </tr>
+                                    <tr>
+                                        <th>
+                                            <center>Nro</center>
+                                        </th>
+                                        <th>
+                                            <center>Nombre de la categoría</center>
+                                        </th>
+                                        <th>
+                                            <center>Acciones</center>
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                $contador_categorias = 0;
-                                foreach ($categorias_datos as $categorias_dato) {
-                                    $contador_categorias    = $contador_categorias + 1;
-                                    $id_categoria           = $categorias_dato['id_categoria'];
-                                    $nombre_categoria       = $categorias_dato['nombre_categoria'];
+                                    <?php
+                                    $contador_categorias = 0;
+                                    foreach ($categorias_datos as $categorias_dato) {
+                                        $contador_categorias    = $contador_categorias + 1;
+                                        $id_categoria           = $categorias_dato['id_categoria'];
+                                        $nombre_categoria       = $categorias_dato['nombre_categoria'];
                                     ?>
-                                    <tr>
-                                        <td><center><?=$contador_categorias;?></center></td>
-                                        <td><?=$categorias_dato['nombre_categoria'];?></td>
-                                        <td>
-                                            <center>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-update<?=$id_categoria;?>" style="border-radius: 5px">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                    <!-- modal para actualizar categorías -->
-                                                    <div class="modal fade" id="modal-update<?=$id_categoria;?>">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-gradient-success">
-                                                                    <h4 class="modal-title">Actualización de categoría</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="form-group text-left">
-                                                                                <label for="" class="text-right">Nombre de la categoría <b>*</b></label>
-                                                                                <input type="text" id="nombre_categoria<?=$id_categoria;?>" value="<?=$nombre_categoria;?>" class="form-control">
-                                                                                <small style="color: red; display: none" id="lbl_update<?=$id_categoria;?>">* Este campo es requerido</small>
+                                        <tr>
+                                            <td>
+                                                <center><?= $contador_categorias; ?></center>
+                                            </td>
+                                            <td><?= $categorias_dato['nombre_categoria']; ?></td>
+                                            <td>
+                                                <center>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-update<?= $id_categoria; ?>" style="border-radius: 5px">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <!-- modal para actualizar categorías -->
+                                                        <div class="modal fade" id="modal-update<?= $id_categoria; ?>">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-gradient-success">
+                                                                        <h4 class="modal-title">Actualización de categoría</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group text-left">
+                                                                                    <label for="" class="text-right">Nombre de la categoría <b>*</b></label>
+                                                                                    <input type="text" id="nombre_categoria<?= $id_categoria; ?>" value="<?= $nombre_categoria; ?>" class="form-control">
+                                                                                    <small style="color: red; display: none" id="lbl_update<?= $id_categoria; ?>">* Este campo es requerido</small>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                                                        <button type="button" class="btn btn-outline-success" id="btn_update<?= $id_categoria; ?>">Actualizar</button>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="modal-footer justify-content-between">
-                                                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-outline-success" id="btn_update<?=$id_categoria;?>">Actualizar</button>
-                                                                </div>
+                                                                <!-- /.modal-content -->
                                                             </div>
-                                                            <!-- /.modal-content -->
+                                                            <!-- /.modal-dialog -->
                                                         </div>
-                                                        <!-- /.modal-dialog -->
+                                                        <!-- /.modal -->
+                                                        <script>
+                                                            $('#btn_update<?= $id_categoria; ?>').click(function() {
+
+                                                                var nombre_categoria = $('#nombre_categoria<?= $id_categoria; ?>').val();
+                                                                var id_categoria = '<?= $id_categoria; ?>';
+
+                                                                if (nombre_categoria == "") {
+                                                                    $('#nombre_categoria<?= $id_categoria; ?>').focus();
+                                                                    $('#lbl_update<?= $id_categoria; ?>').css('display', 'block');
+                                                                } else {
+                                                                    var url = "../app/controllers/categorias/update_de_categorias.php";
+
+                                                                    $.get(url, {
+                                                                        nombre_categoria: nombre_categoria,
+                                                                        id_categoria: id_categoria
+                                                                    }, function(datos) {
+                                                                        $('#respuesta_update<?= $id_categoria; ?>').html(datos);
+                                                                    });
+                                                                }
+
+                                                            });
+                                                        </script>
+                                                        <div id="respuesta_update<?= $id_categoria; ?>"></div>
                                                     </div>
-                                                    <!-- /.modal -->
-                                                    <script>
-                                                        $('#btn_update<?=$id_categoria;?>').click(function () {
-
-                                                            var nombre_categoria = $('#nombre_categoria<?=$id_categoria;?>').val();
-                                                            var id_categoria = '<?=$id_categoria;?>';
-
-                                                            if(nombre_categoria == "") {
-                                                                $('#nombre_categoria<?=$id_categoria;?>').focus();
-                                                                $('#lbl_update<?=$id_categoria;?>').css('display','block');
-                                                            } else {
-                                                                var url = "../app/controllers/categorias/update_de_categorias.php";
-
-                                                                $.get(url,{nombre_categoria:nombre_categoria,id_categoria:id_categoria},function (datos) {
-                                                                    $('#respuesta_update<?=$id_categoria;?>').html(datos);
-                                                                });
-                                                            }
-
-                                                        });
-                                                    </script>
-                                                    <div id="respuesta_update<?=$id_categoria;?>"></div>
-                                                </div>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                                </center>
+                                            </td>
+                                        </tr>
                                     <?php
-                                }
-                                ?>
+                                    }
+                                    ?>
                                 </tbody>
                                 <tfoot class="bg-warning disabled">
-                                <tr>
-                                    <th><center>Nro</center></th>
-                                    <th><center>Nombre de la categoría</center></th>
-                                    <th><center>Acciones</center></th>
-                                </tr>
+                                    <tr>
+                                        <th>
+                                            <center>Nro</center>
+                                        </th>
+                                        <th>
+                                            <center>Nombre de la categoría</center>
+                                        </th>
+                                        <th>
+                                            <center>Acciones</center>
+                                        </th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -151,32 +168,33 @@ include ('../app/controllers/categorias/listado_de_categorias.php');
 <!-- /.content-wrapper -->
 
 <?php
-include ('../layout/mensajes.php');
+include('../layout/mensajes.php');
 
-if(isset($_SESSION['mensaje'])) {
+if (isset($_SESSION['mensaje'])) {
     $respuesta = $_SESSION['mensaje'];
     $icono = $_SESSION['icono'];
-    ?>
+?>
     <script>
         Swal.fire({
             position: "center",
-            icon: "<?=$icono;?>",
-            title: "<?=$respuesta;?>",
+            icon: "<?= $icono; ?>",
+            title: "<?= $respuesta; ?>",
             showConfirmButton: false,
             timer: 2000
         });
     </script>
-    <?php
+<?php
     unset($_SESSION['mensaje'], $_SESSION['icono']);
 }
 
-include ('../layout/parte2.php');
+include('../layout/parte2.php');
 ?>
 
 <script>
-    $(function () {
+    $(function() {
         $("#example1").DataTable({
             "pageLength": 5,
+            "lengthMenu": [5, 10, 25, 50],
             "language": {
                 "emptyTable": "No hay información",
                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Categorías",
@@ -196,26 +214,27 @@ include ('../layout/parte2.php');
                     "previous": "Anterior"
                 }
             },
-            "responsive": true, "lengthChange": true, "autoWidth": false,
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
             buttons: [{
-                extend: 'collection',
-                text: 'Reportes',
-                orientation: 'landscape',
-                buttons: [{
-                    text: 'Copiar',
-                    extend: 'copy',
-                }, {
-                    extend: 'pdf'
-                },{
-                    extend: 'csv'
-                },{
-                    extend: 'excel'
-                },{
-                    text: 'Imprimir',
-                    extend: 'print'
-                }
-                ]
-            },
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy',
+                    }, {
+                        extend: 'pdf'
+                    }, {
+                        extend: 'csv'
+                    }, {
+                        extend: 'excel'
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print'
+                    }]
+                },
                 {
                     extend: 'colvis',
                     text: 'Visor de columnas',
@@ -269,21 +288,21 @@ include ('../layout/parte2.php');
 <!-- /.modal -->
 
 <script>
-    $('#btn_create').click(function () {
+    $('#btn_create').click(function() {
         var nombre_categoria = $('#nombre_categoria').val();
 
-        if(nombre_categoria == "") {
+        if (nombre_categoria == "") {
             $('#nombre_categoria').focus();
-            $('#lbl_create').css('display','block');
+            $('#lbl_create').css('display', 'block');
         } else {
             var url = "../app/controllers/categorias/registro_de_categorias.php";
 
-            $.get(url,{nombre_categoria:nombre_categoria},function (datos) {
+            $.get(url, {
+                nombre_categoria: nombre_categoria
+            }, function(datos) {
                 $('#respuesta').html(datos);
             });
         }
     });
 </script>
 <div id="respuesta"></div>
-
-

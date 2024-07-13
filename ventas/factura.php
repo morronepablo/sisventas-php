@@ -4,8 +4,40 @@
 global $pdo;
 require_once('../app/TCPDF-main/tcpdf.php');
 
-include ('../app/config.php');
-include ('../app/controllers/ventas/literal.php');
+include('../app/config.php');
+include('../app/controllers/ventas/literal.php');
+
+
+
+
+session_start();
+if (isset($_SESSION['sesion_email'])) {
+    //echo "si existe sesion";
+    $email_sesion = $_SESSION['sesion_email'];
+    $sql = "
+    SELECT  us.id_usuario AS id_usuario,
+	        us.nombres AS nombres,
+            us.email AS email,
+            rol.rol AS rol
+    FROM tb_usuarios AS us 
+    INNER JOIN tb_roles AS rol ON us.rol_id = rol.id_rol  WHERE email = '$email_sesion'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $usuarios = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($usuarios as $usuario) {
+        $id_usuario_sesion = $usuario['id_usuario'];
+        $nombres_sesion = $usuario['nombres'];
+        $rol_sesion = $usuario['rol'];
+    }
+} else {
+    echo "no existe sesion";
+    header('Location: ' . $URL . '/login');
+}
+
+
+
+
 
 $id_venta = $_GET['id'];
 $nro_venta = $_GET['nro_venta'];
@@ -39,7 +71,7 @@ $fecha = date("d/m/Y", strtotime($fyh_creacion));
 
 
 // create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(215,279), true, 'UTF-8', false);
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(215, 279), true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
@@ -56,7 +88,7 @@ $pdf->setPrintFooter(false);
 $pdf->setDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->setMargins(15,15,15);
+$pdf->setMargins(15, 15, 15);
 
 // set auto page breaks
 $pdf->setAutoPageBreak(TRUE, 5);
@@ -65,8 +97,8 @@ $pdf->setAutoPageBreak(TRUE, 5);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-    require_once(dirname(__FILE__).'/lang/eng.php');
+if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+    require_once(dirname(__FILE__) . '/lang/eng.php');
     $pdf->setLanguageArray($l);
 }
 
@@ -93,7 +125,7 @@ $html = '
         <td style="width: 170px"></td>
         <td style="font-size: 16px; width: 280px"> <br><br><br><br>
             <b>CUIT: </b>20-22362590-9 <br>
-            <b>Nro. Factura: </b>'.$nro_venta.' <br>
+            <b>Nro. Factura: </b>' . $nro_venta . ' <br>
             <b>Nro de autorización: </b>10000232457
         </td>
     </tr>
@@ -104,12 +136,12 @@ $html = '
 <div style="border: 1px solid #000000">
     <table border="0" cellpadding="6px">
         <tr>
-            <td><b>Fecha: </b>'.$fecha.'</td>
+            <td><b>Fecha: </b>' . $fecha . '</td>
             <td></td>
-            <td><b>DNI: </b>'.$dni_cliente.'</td>
+            <td><b>DNI: </b>' . $dni_cliente . '</td>
         </tr>
         <tr>
-            <td colspan="3"><b>Señor(es): </b>'.$nombre_cliente.'</td>
+            <td colspan="3"><b>Señor(es): </b>' . $nombre_cliente . '</td>
         </tr>
     </table>
 </div>
@@ -162,42 +194,42 @@ foreach ($carrito_datos as $carrito_dato) {
     $total_unitario         = $total_unitario + floatval($carrito_dato['precio_venta']);
     $importe_total          = $importe_total + $subtotal_producto;
 
-    $html.='
+    $html .= '
     <tr>
-        <td style="text-align: center;width: 6%">'.$contador_carrito.'</td>
-        <td style="width: 16%">'.$nombre_producto.'</td>
-        <td style="width: 30%">'.$descripcion_producto.'</td>
-        <td style="text-align: right;width: 12%">'.$carrito_dato['cantidad'].'</td>
-        <td style="text-align: right;width: 18%">$ '.number_format($importe_unitario, 2, '.', ',').'</td>
-        <td style="text-align: right;width: 18%">$ '.number_format($subtotal_producto, 2, '.', ',').'</td>
+        <td style="text-align: center;width: 6%">' . $contador_carrito . '</td>
+        <td style="width: 16%">' . $nombre_producto . '</td>
+        <td style="width: 30%">' . $descripcion_producto . '</td>
+        <td style="text-align: right;width: 12%">' . $carrito_dato['cantidad'] . '</td>
+        <td style="text-align: right;width: 18%">$ ' . number_format($importe_unitario, 2, '.', ',') . '</td>
+        <td style="text-align: right;width: 18%">$ ' . number_format($subtotal_producto, 2, '.', ',') . '</td>
     </tr>
     ';
 }
 
-$html.='
+$html .= '
     <tr style="background-color: #d6d6d6">
         <td colspan="3" style="text-align: right"><b>TOTAL</b></td>
-        <td style="text-align: right">'.$cantidad_total.'</td>
-        <td style="text-align: right">$ '.number_format($total_unitario, 2, '.', ',').'</td>
-        <td style="text-align: right">$ '.number_format($importe_total, 2, '.', ',').'</td>
+        <td style="text-align: right">' . $cantidad_total . '</td>
+        <td style="text-align: right">$ ' . number_format($total_unitario, 2, '.', ',') . '</td>
+        <td style="text-align: right">$ ' . number_format($importe_total, 2, '.', ',') . '</td>
     </tr>
 </table>
 
 <p style="text-align: right">
-    <b>Monto Total: </b> $ '.number_format($importe_total, 2, '.', ',').'
+    <b>Monto Total: </b> $ ' . number_format($importe_total, 2, '.', ',') . '
 </p>
 <p>
-    <b>Son: </b> '.convertir($importe_total).'
+    <b>Son: </b> ' . convertir($importe_total) . '
 </p>
 <br>
 ---------------------------------------------------------------------- <br>
-<b>USUARIO</b> Morrone Pablo <br><br><br><br><br><br><br><br>
+<b>USUARIO</b> ' . $nombres_sesion . ' <br><br><br><br><br><br><br><br>
 
 <p style="text-align: center">GRACIAS POR SU COMPRA</p>
 ';
 
 // Output the HTML content
-$pdf->writeHTML($html,true,false,true,false,'');
+$pdf->writeHTML($html, true, false, true, false, '');
 
 $style = array(
     'border' => 0,
@@ -209,8 +241,9 @@ $style = array(
     'module_height' => 1
 );
 
-$QR = 'hola';
-$pdf->write2DBarcode($QR,'QRCODE,L',180,240,35,35, $style);
+$QR = 'Factura realizada por el sistema de ventas SIS VENTAS, al cliente ' . $nombre_cliente . ' con DNI/CUIT ' . $dni_cliente . ' 
+en fecha: ' . $fecha . ' con el monto total de ' . $precio_unitario_total . '';
+$pdf->write2DBarcode($QR, 'QRCODE,L', 180, 240, 35, 35, $style);
 
 // ---------------------------------------------------------
 
